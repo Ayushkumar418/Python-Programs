@@ -1,0 +1,3 @@
+﻿Today, 23-06-2023 14:17:05						Task stopped							avp.exe	C:\Program Files (x86)\Kaspersky Lab\Kaspersky 21.13\avp.exe	C:\Program Files (x86)\Kaspersky Lab\Kaspersky 21.13		LAPTOP-FR5IF5FQ\Ayush Kumar	Active user	
+Yesterday, 22-06-2023 03:44:24						Task started							avp.exe	C:\Program Files (x86)\Kaspersky Lab\Kaspersky 21.13\avp.exe	C:\Program Files (x86)\Kaspersky Lab\Kaspersky 21.13		LAPTOP-FR5IF5FQ\Ayush Kumar	Active user	
+Today, 23-06-2023 14:17:14						Task started							avp.exe	C:\Program Files (x86)\Kaspersky Lab\Kaspersky 21.13\avp.exe	C:\Program Files (x86)\Kaspersky Lab\Kaspersky 21.13		LAPTOP-FR5IF5FQ\Ayush Kumar	Active user	

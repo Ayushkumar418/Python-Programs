@@ -1,0 +1,10 @@
+We have total number of students= 1
+
+Student Number: 1
+Name:Ayush Kumar
+Course:B.Tech
+Roll No.21
+Section:a
+Year:1
+CGPA:7.70
+
