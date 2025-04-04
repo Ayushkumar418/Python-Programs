@@ -1,3 +1,10 @@
+from colorama import init, Fore, Style
+from tqdm import tqdm
+import time
+import os
+
+init(autoreset=True)
+
 # Create a class to store  the information of  Students.
 class student:
     def __init__(self):
@@ -8,12 +15,68 @@ class student:
         self.year = ""
         self.cgpa = 0.0
 
+def print_banner():
+    print(Fore.CYAN + Style.BRIGHT + """
+    ╔══════════════════════════════════════════════════╗
+    ║             STUDENT DATABASE SYSTEM              ║
+    ║                                                  ║
+    ║        Manage Your Students Efficiently 📚       ║
+    ╚══════════════════════════════════════════════════╝
+    """)
+
+def search_student():
+    try:
+        roll = input(Fore.YELLOW + "Enter Roll Number to search: ")
+        with open("D:\Programming\Python\students database.txt", "r") as fl:
+            content = fl.read()
+            if f"Roll No.{roll}" in content:
+                print(Fore.GREEN + "\nStudent Found!")
+                for line in content.split('\n\n'):
+                    if f"Roll No.{roll}" in line:
+                        print(Fore.CYAN + line)
+                        return
+            else:
+                print(Fore.RED + "Student not found!")
+    except FileNotFoundError:
+        print(Fore.RED + "No database exists yet!")
+
+def delete_student():
+    try:
+        roll = input(Fore.YELLOW + "Enter Roll Number to delete: ")
+        with open("D:\Programming\Python\students database.txt", "r") as fl:
+            lines = fl.read().split('\n\n')
+        
+        with open("D:\Programming\Python\students database.txt", "w") as fl:
+            deleted = False
+            for line in lines:
+                if f"Roll No.{roll}" not in line:
+                    fl.write(line + '\n\n')
+                else:
+                    deleted = True
+            
+            if deleted:
+                print(Fore.GREEN + "Student deleted successfully!")
+            else:
+                print(Fore.RED + "Student not found!")
+    except FileNotFoundError:
+        print(Fore.RED + "No database exists yet!")
+
 def main():
     global n, a, n2, j
     while True:
-        # Ask option  from user
-        print("Press 1 to Enter the detail of students(This option will be delete details of previous students.).\npress 2 to see detail of students.\nPress 3 to add detail of new students.\nPress 5 to Exit.")
-        a = input("Enter:")
+        print(Fore.BLUE + "\n" + "═" * 50)
+        print(Fore.YELLOW + """
+        1. Enter new student details (Reset database)
+        2. View all students
+        3. Add new students
+        4. Search student
+        5. Delete student
+        6. Exit
+        """)
+        print(Fore.BLUE + "═" * 50)
+        
+        a = input(Fore.WHITE + "Enter your choice: ")
+        
         if a == "1":
             # Taking Input from user.
             n = int(input("Enter the number of students:"))
@@ -38,6 +101,10 @@ def main():
             fl2 = open("D:\Programming\Python\student number.txt", "w")
             fl2.write(f"{n}\n")
             fl2.close()
+            for _ in tqdm(range(5), desc="Saving", ncols=75):
+                time.sleep(0.1)
+            print(Fore.GREEN + "\nStudents data saved successfully!")
+            
         elif a == "2":
             print("\n\t Detail of Students\n")
             # Open file, read and print(details).
@@ -45,6 +112,7 @@ def main():
             st = fl.read()
             print(st)
             fl.close()
+            
         elif a == "3":
             print("\n\tNow you can add new students.\n")
             n2 = int(input("Enter the number of new students:"))
@@ -75,24 +143,23 @@ def main():
             fl2.write(f"{j}")
             fl2.close()
             print("New student(s) successfully added.\n")
+            
+        elif a == "4":
+            search_student()
+            
         elif a == "5":
-            print("Thank you.\nHave a nice day.")
+            delete_student()
+            
+        elif a == "6":
+            print(Fore.CYAN + "\nThank you for using Student Database System!")
+            print("Closing application", end='')
+            for _ in tqdm(range(5), desc="Closing", ncols=75):
+                time.sleep(0.1)
             break
+            
         else:
-            print("Invalide Input.\n")
-    
-def Time():
-    import time
-    timestamp = int(time.strftime('%H'))
-    if 4<=timestamp<=10:
-        print("\nGood Morning Sir🥱.\n")
-    elif 10<timestamp<=15:
-        print("\nGood Afternoon Sir🤨.\n")
-    elif 15<timestamp<=20:
-        print("\nGood Evening Sir🫡.\n")
-    else:
-        print("\nGood Night Sir😴.\n")
-
+            print(Fore.RED + "Invalid Input! Please try again.\n")
+            
 if __name__ == "__main__":
-    Time()
+    print_banner()
     main()
