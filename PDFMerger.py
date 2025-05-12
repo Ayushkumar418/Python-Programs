@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 from pypdf import PdfMerger
 import os
+from pathlib import Path
 
 class PDFMergerGUI:
     def __init__(self, root):
@@ -10,6 +11,9 @@ class PDFMergerGUI:
         self.root.geometry("700x500")
         
         self.pdf_files = []
+        
+        # Set default output path
+        self.default_output = str(Path.home() / "Downloads" / "AK_merged.pdf")
         
         # Create main frame
         self.main_frame = ttk.Frame(root, padding="10")
@@ -25,7 +29,7 @@ class PDFMergerGUI:
         
         # Output selection
         ttk.Label(self.main_frame, text="Output File:").grid(row=2, column=0, pady=5)
-        self.output_var = tk.StringVar()
+        self.output_var = tk.StringVar(value=self.default_output)
         ttk.Entry(self.main_frame, textvariable=self.output_var, width=50).grid(row=2, column=1, pady=5)
         ttk.Button(self.main_frame, text="Browse", command=self.select_output).grid(row=2, column=2, pady=5)
         
@@ -56,7 +60,9 @@ class PDFMergerGUI:
     def select_output(self):
         output_file = filedialog.asksaveasfilename(
             defaultextension=".pdf",
-            filetypes=[("PDF files", "*.pdf")]
+            filetypes=[("PDF files", "*.pdf")],
+            initialfile="AK_merged.pdf",
+            initialdir=str(Path.home() / "Downloads")
         )
         if output_file:
             self.output_var.set(output_file)
@@ -66,9 +72,8 @@ class PDFMergerGUI:
             messagebox.showerror("Error", "No PDF files selected!")
             return
         
-        if not self.output_var.get():
-            messagebox.showerror("Error", "No output file selected!")
-            return
+        # Use default path if no output is selected
+        output_path = self.output_var.get() or self.default_output
         
         try:
             merger = PdfMerger()
@@ -79,7 +84,7 @@ class PDFMergerGUI:
                 self.progress['value'] = ((i + 1) / total_files) * 100
                 self.root.update_idletasks()
             
-            with open(self.output_var.get(), 'wb') as f:
+            with open(output_path, 'wb') as f:
                 merger.write(f)
             
             messagebox.showinfo("Success", "PDFs merged successfully!")

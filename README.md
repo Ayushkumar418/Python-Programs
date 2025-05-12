@@ -80,6 +80,4 @@ If you found this useful, don’t forget to ⭐ star the repo!
 
 ---
 
-## 😎Keep learning. Keep coding. Happy Pythoning! 🐍💻🚀
-
----
+ **😎Keep learning. Keep coding. Happy Pythoning! 🐍💻🚀**
